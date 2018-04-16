@@ -26,10 +26,9 @@ typedef struct ble_nss
     ble_gatts_char_handles_t    lock_char_handle;         /**< Handle of Sensor Integration Time Characteristic. */
 }ble_nss_t;
 
-uint32_t ble_lss_on_ble_evt(ble_nss_t * p_nss, ble_evt_t * p_ble_evt);
+uint32_t ble_nss_on_ble_evt(ble_nss_t * p_nss, ble_evt_t * p_ble_evt);
 
-
-void ble_lss_init(ble_nss_t * p_lss);
+void ble_nss_init(ble_nss_t * p_lss);
 
 
 #endif /* SRC_LIB_BLE_SVC_BLE_NSS_H_ */

@@ -5,6 +5,8 @@
  *      Author: gabriel
  */
 
+#include <stdint.h>
+
 #include "app_config.h"
 
 #include "servo.h"

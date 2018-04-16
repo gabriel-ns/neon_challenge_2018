@@ -12,10 +12,11 @@
 
 #include "lock_controller.h"
 #include "safe_internal_protocol.h"
+#include "safe_security_manager.h"
 
-#define CLIENT_AUTH_PERIOD	5000
-#define CLIENT_CONN_PERIOD	1000
-#define CLIENT_DUTY 		500
+#define CLIENT_AUTH_PERIOD	2000
+#define CLIENT_CONN_PERIOD	500
+#define CLIENT_DUTY 		250
 
 APP_TIMER_DEF(client_notification_timer);
 APP_TIMER_DEF(lock_notification_timer);
@@ -29,6 +30,7 @@ static void lock_timer_timeout(void *p_context);
 static void on_disconnect_event();
 static void on_auth_event();
 static void on_open_event();
+static void on_close_event();
 static void on_connect_event();
 static void on_auth_event();
 
@@ -45,10 +47,10 @@ void neon_safe_core_init()
 	nrf_gpio_cfg_output(LOCK_NTF_PIN);
 	nrf_gpio_pin_clear(LOCK_NTF_PIN);
 
-	err_code = app_timer_init(&client_notification_timer, APP_TIMER_MODE_SINGLE_SHOT, client_timer_timeout);
+	err_code = app_timer_create(&client_notification_timer, APP_TIMER_MODE_SINGLE_SHOT, client_timer_timeout);
 	APP_ERROR_CHECK(err_code);
 
-	err_code = app_timer_init(&lock_notification_timer, APP_TIMER_MODE_REPEATED, lock_timer_timeout);
+	err_code = app_timer_create(&lock_notification_timer, APP_TIMER_MODE_REPEATED, lock_timer_timeout);
 	APP_ERROR_CHECK(err_code);
 }
 
@@ -116,6 +118,7 @@ static void on_disconnect_event()
 {
 	app_timer_stop(client_notification_timer);
 	nrf_gpio_pin_clear(CLIENT_NTF_PIN);
+	neon_safe_close();
 }
 
 static void on_connect_event()

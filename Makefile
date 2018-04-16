@@ -11,6 +11,14 @@ $(OUTPUT_DIRECTORY)/nrf51822_xxaa.out: \
 # Source files common to all targets
 SRC_FILES += \
   $(PROJ_DIR)/src/main.c \
+  $(PROJ_DIR)/src/lib/ble/adv/safe_advertiser.c \
+  $(PROJ_DIR)/src/lib/ble/svc/ble_nss.c \
+  $(PROJ_DIR)/src/lib/ble/adv/safe_advertiser.c \
+  $(PROJ_DIR)/src/lib/ble/neon_safe_bluetooth.c \
+  $(PROJ_DIR)/src/lib/lock_controller/lock_controller.c \
+  $(PROJ_DIR)/src/lib/safe_core/neon_safe_core.c \
+  $(PROJ_DIR)/src/lib/safe_core/safe_security_manager.c \
+  $(PROJ_DIR)/src/lib/servo/servo.c \
   $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
   $(SDK_ROOT)/components/ble/ble_advertising/ble_advertising.c \
   $(SDK_ROOT)/components/ble/common/ble_advdata.c \
@@ -43,6 +51,12 @@ SRC_FILES += \
 # Include folders common to all targets
 INC_FOLDERS += \
   $(PROJ_DIR)/src/ \
+  $(PROJ_DIR)/src/lib/ble/adv \
+  $(PROJ_DIR)/src/lib/ble/svc \
+  $(PROJ_DIR)/src/lib/ble \
+  $(PROJ_DIR)/src/lib/lock_controller \
+  $(PROJ_DIR)/src/lib/safe_core/inc \
+  $(PROJ_DIR)/src/lib/servo \
   $(SDK_ROOT)/components \
   $(SDK_ROOT)/components/ble/ble_advertising \
   $(SDK_ROOT)/components/ble/ble_dtm \

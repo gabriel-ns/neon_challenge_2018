@@ -12,13 +12,22 @@
 #include "app_config.h"
 #include "app_error.h"
 
+#include "safe_internal_protocol.h"
+#include "safe_security_manager.h"
 #include "ble.h"
 #include "ble_gatts.h"
 #include "ble_nss.h"
 
+static uint32_t on_rw_authorize_req(ble_nss_t *p_nss, ble_evt_t *p_ble_evt);
+static void on_write(ble_nss_t *p_nss, ble_evt_t *p_ble_evt);
+static void on_read(ble_nss_t * p_nss,ble_evt_t * p_ble_evt);
+static void ble_nss_auth_char_init(ble_nss_t *p_nss);
+static void ble_nss_pw_update_char_init(ble_nss_t *p_nss);
+static void ble_nss_lock_char_init(ble_nss_t *p_nss);
+
 static uint8_t cmd;
 
-uint32_t ble_lss_on_ble_evt(ble_nss_t * p_nss, ble_evt_t * p_ble_evt)
+uint32_t ble_nss_on_ble_evt(ble_nss_t * p_nss, ble_evt_t * p_ble_evt)
 {
 
 	switch (p_ble_evt->header.evt_id)
@@ -39,7 +48,7 @@ uint32_t ble_lss_on_ble_evt(ble_nss_t * p_nss, ble_evt_t * p_ble_evt)
 	return NRF_SUCCESS;
 }
 
-void ble_lss_init(ble_nss_t * p_nss)
+void ble_nss_init(ble_nss_t * p_nss)
 {
 	uint32_t        err_code;
 	ble_uuid_t      service_uuid;
@@ -109,7 +118,7 @@ static void on_write(ble_nss_t *p_nss, ble_evt_t *p_ble_evt)
 		memcpy(msg.auth_try.password, p_evt_write->data, PASSWORD_SIZE);
 
 		sec_manager_rsp_t rsp;
-		rsp = safe_sec_mngr_send_cmd(&rsp);
+		rsp = safe_sec_mngr_send_cmd(&msg);
 
 		if(rsp == SECURITY_SUCCESS)
 		{
@@ -132,7 +141,7 @@ static void on_write(ble_nss_t *p_nss, ble_evt_t *p_ble_evt)
 		memcpy(msg.new_pw.password, p_evt_write->data, PASSWORD_SIZE);
 
 		sec_manager_rsp_t rsp;
-		rsp = safe_sec_mngr_send_cmd(&rsp);
+		rsp = safe_sec_mngr_send_cmd(&msg);
 
 		if(rsp == SECURITY_SUCCESS)
 		{
@@ -162,7 +171,7 @@ static void on_write(ble_nss_t *p_nss, ble_evt_t *p_ble_evt)
 		}
 
 		sec_manager_rsp_t rsp;
-		rsp = safe_sec_mngr_send_cmd(&rsp);
+		rsp = safe_sec_mngr_send_cmd(&msg);
 
 		if(rsp == SECURITY_SUCCESS)
 		{

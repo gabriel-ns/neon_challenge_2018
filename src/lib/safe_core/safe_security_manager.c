@@ -48,9 +48,10 @@ sec_manager_rsp_t safe_sec_mngr_send_cmd(safe_msg_t* msg)
 		break;
 
 	/* Events are always dispatched */
+	case SAFE_EVT_CLIENT_DISCONNECTED:
+		is_access_allowed = false;
 	case SAFE_EVT_AUTHENTICATION_SUCCESS:
 	case SAFE_EVT_CLIENT_CONNECTED:
-	case SAFE_EVT_CLIENT_DISCONNECTED:
 		neon_safe_core_handler(msg);
 		break;
 
@@ -68,6 +69,7 @@ sec_manager_rsp_t safe_sec_mngr_send_cmd(safe_msg_t* msg)
 		break;
 
 	default:
+		break;
 	}
 
 	return SECURITY_DENIED;

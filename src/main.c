@@ -15,6 +15,12 @@
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+
+#include "safe_internal_protocol.h"
+#include "safe_security_manager.h"
+#include "neon_safe_bluetooth.h"
+
+
 /**
  * @brief Function for doing power management.
  */
@@ -47,6 +53,9 @@ int main(void)
      SOFTDEVICE_HANDLER_INIT(&lf_clock_config, NULL);
     NRF_LOG_INFO("Initializing FW\n");
     NRF_LOG_FLUSH();
+
+    bluetooth_init();
+    safe_sec_mngr_init();
 
     // Enter main loop.
     for (;;)
