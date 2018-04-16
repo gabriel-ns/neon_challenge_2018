@@ -25,6 +25,7 @@ void safe_sec_mngr_init()
 	/* start with 0000000000000000 password */
 	memset(curr_password, 0x00, PASSWORD_SIZE);
 
+	neon_safe_core_init();
 }
 
 sec_manager_rsp_t safe_sec_mngr_send_cmd(safe_msg_t* msg)
@@ -83,6 +84,10 @@ static sec_manager_rsp_t safe_sec_mngr_authenticate(safe_msg_t* msg)
 	{
 		retries_count = 0;
 		is_access_allowed = true;
+
+		safe_msg_t msg;
+		msg.type = SAFE_EVT_AUTHENTICATION_SUCCESS;
+		safe_sec_mngr_send_cmd(&msg);
 		return SECURITY_SUCCESS;
 	}
 	else
@@ -99,5 +104,10 @@ static sec_manager_rsp_t safe_sec_mngr_authenticate(safe_msg_t* msg)
 static void safe_sec_mngr_set_password(safe_msg_t* msg)
 {
 	memcpy(curr_password, msg->new_pw.password, PASSWORD_SIZE);
+}
+
+uint8_t* safe_sec_mngr_get_pw_ptr()
+{
+	return curr_password;
 }
 

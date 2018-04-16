@@ -14,7 +14,6 @@ void lock_controller_init()
 {
 	servo_init(LOCK_DEFAULT_PIN);
 	lock_controller_lock();
-
 }
 
 void lock_controller_lock()

@@ -20,5 +20,6 @@ sec_manager_rsp_t safe_sec_mngr_send_cmd(safe_msg_t *msg);
 
 bool safe_sec_mngr_is_authorized();
 
+uint8_t* safe_sec_mngr_get_pw_ptr();
 
 #endif /* SRC_LIB_SAFE_CORE_INC_SAFE_SECURITY_MANAGER_H_ */
