@@ -16,7 +16,7 @@ typedef enum sec_manager_rsp
 
 void safe_sec_mngr_init();
 
-sec_manager_rsp_t safe_sec_mngr_send_cmd(safe_msg_t msg);
+sec_manager_rsp_t safe_sec_mngr_send_cmd(safe_msg_t *msg);
 
 bool safe_sec_mngr_is_authorized();
 

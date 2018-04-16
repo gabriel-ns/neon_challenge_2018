@@ -9,6 +9,6 @@
 #define SRC_LIB_SAFE_CORE_INC_NEON_SAFE_CORE_H_
 
 void neon_safe_core_init();
-void neon_safe_core_handler(safe_msg_t msg);
+void neon_safe_core_handler(safe_msg_t *msg);
 
 #endif /* SRC_LIB_SAFE_CORE_INC_NEON_SAFE_CORE_H_ */

@@ -10,6 +10,8 @@
 
 #include "custom_board.h"
 
+#define MAX_PASSWORD_TRIES								3
+#define PASSWORD_SIZE									6
 #define LOCK_DEFAULT_PIN								8
 #define CLIENT_NTF_PIN									BLE400_LED_3_PIN
 #define LOCK_NTF_PIN									BLE400_LED_4_PIN

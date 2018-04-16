@@ -52,9 +52,9 @@ void neon_safe_core_init()
 	APP_ERROR_CHECK(err_code);
 }
 
-void neon_safe_core_handler(safe_msg_t msg)
+void neon_safe_core_handler(safe_msg_t *msg)
 {
-	switch(msg.type)
+	switch(msg->type)
 	{
 	case SAFE_CMD_OPEN:
 		neon_safe_open();
